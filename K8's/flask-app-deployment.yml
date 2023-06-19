@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app-deployment-hpa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-book-app
+  template:
+    metadata:
+      labels:
+        app: flask-book-app
+    spec:
+      containers:
+        - name: flask-app-container
+          image: tejashwini690/flask-book-app
+          resources:
+            requests:
+              cpu: 2m
+              memory: 50Mi
+            limits:
+              cpu: 100m
+              memory: 300Mi
+         

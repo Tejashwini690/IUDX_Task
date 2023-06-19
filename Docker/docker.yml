@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  flask-book-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8000:5000'
+    networks:
+      - mynetwork2
+
+  sqlite-container1:
+    image: keinos/sqlite3
+    networks:
+      - mynetwork2
+    volumes:
+      - /path/to/your/sqlite/db:/data
+
+  flask-app-container1:
+    image: your-flask-image
+    ports:
+      - '5000:5000'
+    networks:
+      - mynetwork2
+
+  new-sqlite-container2:
+    image: keinos/sqlite3
+    volumes:
+      - myvolume:/data
+
+volumes:
+  myvolume:
+
+networks:
+  mynetwork2:

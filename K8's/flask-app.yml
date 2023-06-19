@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-book-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-book-app
+  template:
+    metadata:
+      labels:
+        app: flask-book-app
+    spec:
+      containers:
+        - name: flask-book-app
+          image: tejashwini690/flask-book-api
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: myvolume1
+              mountPath: /data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-book-app-service
+spec:
+  selector:
+    app: flask-book-app
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 5000
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: myvolume1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: C:\Users\DELL\Desktop\flask-book-api\books.db

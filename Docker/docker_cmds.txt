@@ -1,0 +1,21 @@
+ docker build -t flask-book-api .
+
+docker run --name flask-book-api -d -p 8000:5000 --rm flask-book-api:latest
+
+docker network create mynetwork2
+
+docker run --name sqlite-container1 --network mynetwork2 -v /path/to/your/sqlite/db:/data -d sqlite
+
+docker run --name flask-app-container1 --network mynetwork2 -p 5000:5000 your-flask-image
+
+docker volume create myvolume
+
+docker run --rm -v myvolume:/data -v /path/to/your/sqlite/db:/backup sqlite \
+cp /backup/mydatabase.db /data/mydatabase.db
+
+docker run --name new-sqlite-container2 -v myvolume:/data -d keinos/sqlite
+
+
+
+
+

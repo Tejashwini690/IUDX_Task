@@ -1,0 +1,12 @@
+
+minikube start
+
+kubectl apply -f flask-app.yaml
+
+kubectl get deployments
+
+kubectl get services
+
+minikube ip
+
+minikube service flask-app-service
